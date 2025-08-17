@@ -1,5 +1,7 @@
 package com.maven.seleniumtests;
 
+import java.nio.file.Path;
+
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
@@ -8,6 +10,9 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
 
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
 import io.github.bonigarcia.wdm.WebDriverManager;
 
 public class JenkinsHomePageTest {
@@ -19,9 +24,11 @@ public class JenkinsHomePageTest {
     }
 
     @BeforeEach
-    void setupTest() {
+    void setupTest() throws IOException {
         ChromeOptions options = new ChromeOptions();
         options.addArguments("--headless");
+        Path tempDir = Files.createTempDirectory("chrome-user-data");
+        options.addArguments("--user-data-dir=" + tempDir.toAbsolutePath().toString());
         driver = new ChromeDriver(options);
     }
 
