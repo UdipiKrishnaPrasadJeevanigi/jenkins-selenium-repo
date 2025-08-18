@@ -1,6 +1,6 @@
 package com.maven.seleniumtests;
 
-import java.nio.file.Path;
+import java.io.IOException;
 
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeAll;
@@ -10,9 +10,6 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
 
-import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Path;
 import io.github.bonigarcia.wdm.WebDriverManager;
 
 public class JenkinsHomePageTest {
@@ -27,8 +24,8 @@ public class JenkinsHomePageTest {
     void setupTest() throws IOException {
         ChromeOptions options = new ChromeOptions();
         options.addArguments("--headless");
-        Path tempDir = Files.createTempDirectory("chrome-user-data");
-        options.addArguments("--user-data-dir=" + tempDir.toAbsolutePath().toString());
+        options.addArguments("--no-sandbox");
+        options.addArguments("--disable-dev-shm-usage");
         driver = new ChromeDriver(options);
     }
 
